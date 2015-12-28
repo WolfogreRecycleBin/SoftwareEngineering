@@ -97,8 +97,8 @@ void Player::BattleWith(bool & end, bool & lost, Player & other_player)
 	std::cout << "\nEntering Battle...\n";
 
 	int archers_dead, catapults_dead, swordsmen_dead;
-	int g_archers_dead, g_catapults_dead;
-	int g_swordsmen_dead;
+	int other_player_archers_dead, other_player_catapults_dead;
+	int other_player_swordsmen_dead;
 
 	//each catapult kills 2 archers
 	archers_dead = 2 * other_player.catapults;
@@ -107,9 +107,9 @@ void Player::BattleWith(bool & end, bool & lost, Player & other_player)
 	//each archer kills 3 swordsmen
 	swordsmen_dead = 3 * other_player.archers;
 
-	g_archers_dead = 2 * catapults_sent;
-	g_catapults_dead = swordsmen_sent;
-	g_swordsmen_dead = 3 * archers_sent;
+	other_player_archers_dead = 2 * catapults_sent;
+	other_player_catapults_dead = swordsmen_sent;
+	other_player_swordsmen_dead = 3 * archers_sent;
 
 	//makes sure that the number of 
 	//units does not go below 0.
@@ -120,12 +120,12 @@ void Player::BattleWith(bool & end, bool & lost, Player & other_player)
 	swordsmen = (swordsmen_dead < swordsmen) ?
 		swordsmen - swordsmen_dead : 0;
 
-	other_player.archers = (g_archers_dead < other_player.archers) ?
-		other_player.archers - g_archers_dead : 0;
-	other_player.catapults = (g_catapults_dead < other_player.catapults) ?
-		other_player.catapults - g_catapults_dead : 0;
-	other_player.swordsmen = (g_swordsmen_dead < other_player.swordsmen) ?
-		other_player.swordsmen - g_swordsmen_dead : 0;
+	other_player.archers = (other_player_archers_dead < other_player.archers) ?
+		other_player.archers - other_player_archers_dead : 0;
+	other_player.catapults = (other_player_catapults_dead < other_player.catapults) ?
+		other_player.catapults - other_player_catapults_dead : 0;
+	other_player.swordsmen = (other_player_swordsmen_dead < other_player.swordsmen) ?
+		other_player.swordsmen - other_player_swordsmen_dead : 0;
 
 	std::cout << "It was a long battle. "
 		<< archers_dead << " archers died.\n"
@@ -143,7 +143,7 @@ void Player::BattleWith(bool & end, bool & lost, Player & other_player)
 	{
 		lost = false;
 		end = true;
-
+		return;
 	}
 	end = false;
 }
